@@ -7,7 +7,6 @@ from pathlib import Path
 import skimage.io
 import skimage.measure
 from typing import List
-#import os
 
 
 def find_images_from_directories(directories_parameter: str, dictionary_parameter: dict) -> List[Path]:
@@ -114,7 +113,6 @@ def ensure_key_in_dictionary(current_image: int, key_parameter: str, dictionary_
 
 
 def export_dictionaries(directory_parameter: str, dictionary_parameter: dict) -> str:
-    #os.path.realpath(__file__)
     file = open(directory_parameter + ".csv", 'w')
     writer = csv.writer(file)
     writer.writerow(["Image Name", "Signal Noise Ratio", "Blurriness (0-1)"])
@@ -183,8 +181,10 @@ if __name__ == '__main__':
     directories = arguments.p
 
     if len(directories) == 0:
-        # directories = [input("Name a directory (use command line to enter multiple directories): ")]
-        directories = ["/Users/ms72/PycharmProjects/ImageProject/Data/codex_sample/src_data/Cyc1_reg1",
-                       "/Users/ms72/PycharmProjects/ImageProject/Data/codex_sample/src_data/Cyc2_reg1"]
+        directories = [input("Name a directory (use command line to enter multiple directories): ")]
+        for image_dir in directories:
+            if not Path(image_dir).exists():
+                msg = f"Directory {image_dir} doesn't exist"
+                raise FileNotFoundError(msg)
 
     main(directories)
