@@ -124,6 +124,7 @@ def export_dictionaries(directory_parameter: str, dictionary_parameter: dict) ->
 
 
 def check_if_csv_save_already_exists(directory: str, current_folder_parameter: str) -> bool:
+    # Checks if a .csv file with the same name already exists, if so, it asks the user whether to overwrite it or not
     try:
         open(directory + ".csv", 'x')
     except FileExistsError:
@@ -132,6 +133,7 @@ def check_if_csv_save_already_exists(directory: str, current_folder_parameter: s
               f" already exists, would you like overwrite it? [Y] or [N] ", end="\r")
         overwrite = input("\n")
         while True:
+            # Repeat while answer isn't a Y or N
             if overwrite.upper() == "Y" or overwrite.upper() == "YES":
                 overwrite = True
                 break
@@ -181,10 +183,10 @@ if __name__ == '__main__':
     directories = arguments.p
 
     if len(directories) == 0:
-        directories = [input("Name a directory (use command line to enter multiple directories): ")]
+        directories = [input("\033[5;32;49mName a directory (use command line to enter multiple directories): \033[0;0m")]
         for image_dir in directories:
             if not Path(image_dir).exists():
-                msg = f"Directory {image_dir} doesn't exist"
+                msg = f"\033[5;32;49mDirectory {image_dir} doesn't exist\033[0;0m"
                 raise FileNotFoundError(msg)
 
     main(directories)
